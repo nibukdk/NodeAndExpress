@@ -1,0 +1,77 @@
+<%include ./partials/header.ejs %>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-9 ">
+        <h1 class="">Register Page</h1>
+        <form action="/" method="POST" class="row justify-content-center bg-dark text-white">
+          <div class="col-lg-9">
+            <div class="form-group">
+              <label for="name">Name</label>
+              <input class="form-control" type="text"  name="admin[name]">
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <div class="form-group">
+              <label for="employeeId">Employee ID</label>
+              <input class="form-control" type="text" id="employeeId"  name="admin[employeeId]">
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <div class="form-group">
+              <label for="securityId">Security ID</label>
+              <input class="form-control" type="text" id="securityId"  name="admin[securityId]">
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <div class="form-group">
+              <label for="age">Age</label>
+              <input class="form-control" id="age" type="number" name="admin[age]" min="18" max="65">
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <div class="form-group">
+              <label for="username">User Name</label>
+              <input class="form-control" type="text" id="username"  name="admin[username]">
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input class="form-control" type="password" id="password"  name="admin[password]">
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <div class="form-group">
+              <label for="registrationCode">Registration Code</label>
+              <input class="form-control" id="registrationCode" type="text"  name="admin[registrationCode]">
+            </div>
+          </div>
+          <div class="col-lg-9">
+          </div>
+          <div class="col-lg-9">
+            <label for="sex">Sex</label>
+            <div class="form-group row">
+
+              <div class="col-lg-4">
+                <label for="male">Male</label>
+                <input class="form-control" type="radio" id="male" name="admin[sex]" value="Male">
+              </div>
+              <div class="col-lg-4">
+                <label for="female">Female</label>
+                <input class="form-control" type="radio" id="female" name="admin[sex]" value="Female">
+              </div>
+            </div>
+            <div class="col-lg-9">
+              <button class="btn  btn-primary btn-lg">Register</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+
+
+
+  <%include ./partials/footer.ejs %>
