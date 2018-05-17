@@ -1,5 +1,5 @@
 <%include ./partials/header.ejs %>
-
+<!-- Form for registration route -->
   <div class="container">
     <div class="row">
       <div class="col-lg-9 ">
@@ -8,43 +8,44 @@
           <div class="col-lg-9">
             <div class="form-group">
               <label for="name">Name</label>
-              <input class="form-control" type="text"  name="admin[name]">
+              <input class="form-control" type="text"  name="name">
             </div>
           </div>
           <div class="col-lg-9">
             <div class="form-group">
               <label for="employeeId">Employee ID</label>
-              <input class="form-control" type="text" id="employeeId"  name="admin[employeeId]">
+              <input class="form-control" type="text" id="employeeId"  name="employeeId">
             </div>
           </div>
           <div class="col-lg-9">
             <div class="form-group">
               <label for="securityId">Security ID</label>
-              <input class="form-control" type="text" id="securityId"  name="admin[securityId]">
+              <input class="form-control" type="text" id="securityId"  name="securityId">
             </div>
           </div>
           <div class="col-lg-9">
             <div class="form-group">
               <label for="age">Age</label>
-              <input class="form-control" id="age" type="number" name="admin[age]" min="18" max="65">
+              <input class="form-control" id="age" type="number" name="age" min="18" max="65">
             </div>
           </div>
           <div class="col-lg-9">
             <div class="form-group">
               <label for="username">User Name</label>
-              <input class="form-control" type="text" id="username"  name="admin[username]">
+              <input class="form-control" type="text" id="username"  name="username">
             </div>
           </div>
           <div class="col-lg-9">
             <div class="form-group">
               <label for="password">Password</label>
-              <input class="form-control" type="password" id="password"  name="admin[password]">
+              <input class="form-control" type="password" id="password"  name="password">
             </div>
           </div>
           <div class="col-lg-9">
             <div class="form-group">
               <label for="registrationCode">Registration Code</label>
-              <input class="form-control" id="registrationCode" type="text"  name="admin[registrationCode]">
+              <input class="form-control" id="registrationCode" type="text"  name="registrationCode">
+              <small id="registrationCode" class="form-text text-muted">Its optional and leave empty for customers</small>
             </div>
           </div>
           <div class="col-lg-9">
@@ -55,11 +56,11 @@
 
               <div class="col-lg-4">
                 <label for="male">Male</label>
-                <input class="form-control" type="radio" id="male" name="admin[sex]" value="Male">
+                <input class="form-control" type="radio" id="male" name="sex" value="Male">
               </div>
               <div class="col-lg-4">
                 <label for="female">Female</label>
-                <input class="form-control" type="radio" id="female" name="admin[sex]" value="Female">
+                <input class="form-control" type="radio" id="female" name="sex" value="Female">
               </div>
             </div>
             <div class="col-lg-9">
