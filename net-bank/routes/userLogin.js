@@ -19,7 +19,7 @@ let express = require('express'),
 //User Login Route
 
 let loginMiddleware= passport.authenticate('local',{
-  successRedirect:"/",
+
   failureRedirect:"/login"
 });
 
@@ -29,6 +29,13 @@ let loginMiddleware= passport.authenticate('local',{
 
     router.post("/login",loginMiddleware,  function(req,res){
 
+          if(req.user.isAdmin===false){
+            res.render("client");
+          }
+          else if(req.user.isAdmin===true){
+            res.render("admin")
+          }
+    
 
     });
 
