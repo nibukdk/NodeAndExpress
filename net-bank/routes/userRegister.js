@@ -12,15 +12,22 @@ let express = require('express'),
       next();
     });
 
-
+    router.use(function (req, res, next) {
+        res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+        res.header('Expires', '-1');
+        res.header('Pragma', 'no-cache');
+        next()
+    });
 
 
 //App Registration Route
     router.get("/register", function(req, res) {
-      res.render("register");
+    let currentUser =req.user;
+      res.render("register",{currentUser:currentUser});
     });
 
     router.post("/register", function(req, res) {
+      let user = req.user;
      let name = req.body.name,
         username = req.body.username,
         password = req.body.password,
@@ -29,6 +36,7 @@ let express = require('express'),
         registrationCode = req.body.registrationCode,
         securityId = req.body.securityId,
         sex = req.body.sex,
+        email= req.body.email,
         isAdmin = false;
 
       if (registrationCode === "123456") {
@@ -51,15 +59,11 @@ let express = require('express'),
 
         }
         passport.authenticate('local')(req, res, function() {
-          res.render("index");
+          res.render("index",{currentuser: currentUser});
         });
       });
 
     });
-
-
-
-
 
 
     module.exports = router;

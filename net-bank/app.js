@@ -6,6 +6,7 @@ let express = require("express"),
   methodOverride = require("method-override"),
   passport = require('passport'),
   LocalStrategy = require("passport-local"),
+  session =require("express-session"),
   User = require("./models/user.js");
 
 let registerRoute= require("./routes/userRegister.js");
@@ -36,7 +37,7 @@ app.use(express.static(__dirname + '/public/stylesheets/'));
 app.use(methodOverride('_method'));
 
 //use passport and set session
-app.use(require("express-session")({
+app.use(session({
   secret: 'Login is necessary',
   resave: false,
   saveUninitialized: false
@@ -60,19 +61,28 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.get("/", function(req, res) {
+app.use(function (req, res, next) {
+    res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+    res.header('Expires', '-1');
+    res.header('Pragma', 'no-cache');
+    next()
+});
 
-  res.render("index");
+app.get("/", function(req, res) {
+  let currentUser = req.user;
+  res.render("index",{currentUser: currentUser});
 });
 app.get("/home", function(req, res) {
+  let currentUser = req.user;
 
-  res.render("index");
+res.render("index",{currentUser: currentUser});
 });
 //app.use(userRoute);
 
 
 app.use(registerRoute);
 app.use(loginRoute);
+
 
 
 app.listen(8080, function() {
