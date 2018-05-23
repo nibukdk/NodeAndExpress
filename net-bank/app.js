@@ -7,10 +7,12 @@ let express = require("express"),
   passport = require('passport'),
   LocalStrategy = require("passport-local"),
   session =require("express-session"),
+  flash = require('connect-flash');
   User = require("./models/user.js");
 
 let registerRoute= require("./routes/userRegister.js");
 let loginRoute= require("./routes/userLogin.js");
+const PORT = process.env.PORT || 8080;
 
 //Bootstrap
 app.use('/js', express.static(__dirname + '/node_modules/bootstrap/dist/js')); // redirect bootstrap JS
@@ -29,6 +31,9 @@ mongoose.connect("mongodb://localhost/NetBank", function(err, db) {
 
 app.set('view engine', 'ejs');
 app.set('views', './views');
+
+//Use flash
+app.use(flash());
 
 app.use(bodyParser.urlencoded({
   extented: false
@@ -49,8 +54,11 @@ app.use(passport.session());
 //Get current user
 app.use(function(req, res, next) {
   res.locals.user = req.user;
+   res.locals.error= req.flash("error");
+   res.locals.success= req.flash("success");
   next();
 });
+
 
 
 
@@ -83,28 +91,6 @@ res.render("index",{currentUser: currentUser});
 app.use(registerRoute);
 app.use(loginRoute);
 
-
-
-app.listen(8080, function() {
+app.listen(PORT, function() {
   console.log("Server is up and running");
 });
-
-/*
-Admin.register(new Admin({
-  name:"Nibesh",
-  securityId: "1234",
-  employeeId: "1234",
-  age: 25,
-  username: "isAdmin",
-  password: "isAdmin",
-  isAdmin: true
-
-}), function(err, result){
-    if(err){
-      console.log(err);
-    }else{
-      console.log(result);
-      res.json(result);
-    }
-
-});*/

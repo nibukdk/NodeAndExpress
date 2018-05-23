@@ -3,12 +3,17 @@ let express = require('express'),
       methodOverride = require("method-override"),
       passport = require('passport'),
       LocalStrategy = require("passport-local"),
+      flash = require('connect-flash');
       User = require("../models/user.js");
 
+
+      //Use flash
+      router.use(flash());
 
     //Get current user
     router.use(function(req, res, next) {
       res.locals.user = req.user;
+      res.locals.message=req.flash("error");
       next();
     });
 
@@ -27,7 +32,7 @@ let express = require('express'),
     });
 
     router.post("/register", function(req, res) {
-      let user = req.user;
+      let currentUser = req.user;
      let name = req.body.name,
         username = req.body.username,
         password = req.body.password,
@@ -42,7 +47,7 @@ let express = require('express'),
       if (registrationCode === "123456") {
         isAdmin = true;
       }
-
+      console.log(email);
       User.register(new User({
         name: name,
         username: username,
@@ -59,7 +64,7 @@ let express = require('express'),
 
         }
         passport.authenticate('local')(req, res, function() {
-          res.render("index",{currentuser: currentUser});
+          res.render("index",{currentUser: currentUser});
         });
       });
 

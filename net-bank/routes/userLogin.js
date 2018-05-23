@@ -3,12 +3,18 @@ let express = require('express'),
   methodOverride = require("method-override"),
   passport = require('passport'),
   LocalStrategy = require("passport-local"),
+  flash = require('connect-flash');
   User = require("../models/user.js");
 
+
+
+  //Use flash
+  router.use(flash());
 
 //Get current user
 router.use(function(req, res, next) {
   res.locals.user = req.user;
+  res.locals.message=req.flash("error");
   next();
 });
 router.use(function (req, res, next) { //Prevent Browser Cache after logout
@@ -29,23 +35,17 @@ router.get("/home", function(req, res) {
 });
 
 //Providing Admin Route
-router.get("/admin", function(req, res) {
+router.get("/admin", isLoggedIn,function(req, res) {
   let currentUser = req.user;
-  if(!currentUser){
-    res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-    return res.redirect("/");
-  }
+
   res.render("admin", {
     currentUser: currentUser
   });
 });
 //Providing client Route
-router.get("/client", function(req, res) {
+router.get("/client", isLoggedIn,function(req, res) {
   let currentUser = req.user;
-  if(!currentUser){
-    res.set('Cache-Control', 'no-cache, private, no-store, must-revalidate, max-stale=0, post-check=0, pre-check=0');
-    return res.redirect("/");
-  }
+
   res.render("client", {
     currentUser: currentUser
   });
@@ -53,7 +53,6 @@ router.get("/client", function(req, res) {
 //User Login Route
 
 let loginMiddleware = passport.authenticate('local', {
-
   failureRedirect: "/login"
 });
 
@@ -80,9 +79,12 @@ router.post("/login", loginMiddleware, function(req, res) {
 router.get("/logout", isLoggedIn,function(req, res,next) {
   req.logout();
   req.session.destroy(function (err) {
-  if (err) return next(err)
+  if (err) {
+    return next(err);
+  }
+  req.flash("logout", "Logged you out");
   res.redirect('/')
-})
+});
 });
 
 
@@ -92,7 +94,8 @@ function isLoggedIn(req, res, next) {
 
     return next();
   }
-  res.redirect("back");
+  req.flash("error","Please Login First");
+  res.redirect("/");
   console.log("User is not logged in ");
 }
 
