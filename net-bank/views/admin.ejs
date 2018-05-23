@@ -1,13 +1,25 @@
 <%include ./partials/header.ejs %>
 <!-- Form for registration route -->
-  <div class="container">
-    <div class="row">
-      <h1>Admin Page</h1>
+<div class="col-lg-9 col-sm-6 bodyPart">
+      <h1 class="text-dark">Admin Page</h1>
       <p>Welcome <%= currentUser.name %></p>
-    </div>
-  </div>
+    <ul>
+      <% result.forEach((result)=>{ %>
 
+        <li>
+          <div class="card border-success bg-dark text-white">
+                <h5 class="card-title text-center"><%= result.name %> </h5>
+                  <span>Last Logged In: <%= result.last_login_date.toTimeString().substring(0,8) %>, <%= result.last_login_date.toDateString() %> </span>
+                  <div class="card-footer bg-transparent">
+                    <a href="/user/:id" class="card-link">Detail</a>
 
+                  </div>
+          </div>
 
+        </li>
+
+  <%  }) %>
+    </ul>
+</div>
 
   <%include ./partials/footer.ejs %>

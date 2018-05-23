@@ -2,15 +2,6 @@ let mongoose = require("mongoose"),
   passportLocalMongoose = require("passport-local-mongoose"),
   validator= require("validator");
 
-
-
-
-function validation(email){
-  if(validator.isEmail(email)){
-    return email;
-  }
-
-}
 let userSchema =  mongoose.Schema({
   name: String,
   securityId: String,
@@ -39,8 +30,11 @@ let userSchema =  mongoose.Schema({
       message: '{value} is not a valid email',
       isAsync: false
     }
-
-  }
+  },
+  last_login_date: {
+    type: Date,
+    default: Date.now
+}
 
 });
 
