@@ -9,7 +9,7 @@
         <li>
           <div class="card border-success bg-dark text-white">
                 <h5 class="card-title text-center"><%= result.name %> </h5>
-                  <span>Last Logged In: <%= result.last_login_date.toTimeString().substring(0,8) %>, <%= result.last_login_date.toDateString() %> </span>
+                  <span>Last Logged In: <%= result.last_login_date.toLocaleTimeString().substring(0,8) %>, <%= result.last_login_date.toLocaleDateString("en-GB",{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %> </span>
                   <div class="card-footer bg-transparent">
                     <a href="/user/:id" class="card-link">Detail</a>
 

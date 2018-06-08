@@ -7,4 +7,3 @@ UserStory:
   Non-Admin/Client:
     1. See Transaction
     2. Do normal Banking stuff
-    

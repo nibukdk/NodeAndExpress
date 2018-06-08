@@ -6,6 +6,8 @@ let express = require('express'),
   flash = require('connect-flash');
   User = require("../models/user.js");
 
+let adminRoute= require("./admin.js");
+
 
 
   //Use flash
@@ -35,13 +37,7 @@ router.get("/home", function(req, res) {
 });
 
 //Providing Admin Route
-router.get("/admin", isLoggedIn,function(req, res) {
-  let currentUser = req.user;
-
-  res.render("admin", {
-    currentUser: currentUser
-  });
-});
+router.use(adminRoute);
 //Providing client Route
 router.get("/client", isLoggedIn,function(req, res) {
   let currentUser = req.user;
@@ -64,14 +60,17 @@ router.get("/login", function(req, res) {
 });
 
 router.post("/login", loginMiddleware, function(req, res) {
-
+   let currentUser = req.user;
+  User.findOneAndUpdate({username:currentUser.username},{last_login_date: Date.now()}, function(err,result){
+    if(err){
+      console.log(err);
+    }
+  });
   if (req.user.isAdmin === false) {
     res.redirect("/client");
   } else if (req.user.isAdmin === true) {
     res.redirect("/admin")
   }
-
-
 });
 
 //Log out
@@ -82,7 +81,7 @@ router.get("/logout", isLoggedIn,function(req, res,next) {
   if (err) {
     return next(err);
   }
-  req.flash("logout", "Logged you out");
+//  req.flash("logout", "Logged you out");
   res.redirect('/')
 });
 });

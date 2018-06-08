@@ -6,10 +6,26 @@ form{
 
  .btn{
   text-align: center;
-  
+  margin-top: 2rem;
 }
+
+
 
 h1{
   text-align: center;
 
+}
+.alert{
+  margin: 1rem;
+}
+
+ul{
+  list-style: none;
+}
+.bodyPart{
+  margin: auto;
+}
+
+.card{
+  margin: 2rem;
 }
