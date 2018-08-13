@@ -24,14 +24,31 @@ router.get("/admin", isLoggedIn,function(req, res) {
   User.find({},function(err,result){
     result.forEach(result =>{
       userList[result._id]=result;
+
     });
 
     res.render("admin", {
       currentUser: currentUser,
       result: result
     });
+
   });
 
+
+});
+
+//Get Details of register clients
+
+router.get("/admin/:id/details", function(req, res){
+  let userId = req.params.id, currentUser= req.user;
+  User.findById(req.params.id, function(err, result){
+    if(err){
+      console.log(err);
+    }
+    console.log(userId);
+
+      res.render('user-detail',{user: result, currentUser: currentUser})
+  })
 
 });
 
@@ -41,13 +58,12 @@ router.get("/admin", isLoggedIn,function(req, res) {
 
 
 function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated()) {
-
+  if(req.isAuthenticated() && req.user.isAdmin=== true){
     return next();
   }
   req.flash("error","Please Login First");
   res.redirect("/");
-  console.log("User is not logged in ");
+
 }
 let loginMiddleware = passport.authenticate('local', {
   failureRedirect: "/login"

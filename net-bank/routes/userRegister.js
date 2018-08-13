@@ -26,14 +26,14 @@ let express = require('express'),
 
 
 //App Registration Route
-    router.get("/register", function(req, res) {
+    router.get("/register", isLoggedIn, function(req, res) {
     let currentUser =req.user;
       res.render("register",{currentUser:currentUser});
     });
 
     router.post("/register", function(req, res) {
       let currentUser = req.user;
-     let name = req.body.name,
+      let name = req.body.name,
         username = req.body.username,
         password = req.body.password,
         age = req.body.age,
@@ -63,12 +63,24 @@ let express = require('express'),
           return res.redirect("back");
 
         }
-        passport.authenticate('local')(req, res, function() {
-          res.render("index",{currentUser: currentUser});
-        });
+         res.redirect('/admin');
+
+
       });
 
     });
+
+
+    function isLoggedIn(req, res, next) {
+      if (req.isAuthenticated()) {
+
+        return next();
+      }
+     req.flash("error","Please Login First");
+      res.redirect("/login");
+      console.log("User is not logged in ");
+    }
+
 
 
     module.exports = router;

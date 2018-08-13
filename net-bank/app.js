@@ -36,7 +36,7 @@ app.set('views', './views');
 app.use(flash());
 
 app.use(bodyParser.urlencoded({
-  extented: false
+  extented: true
 }));
 app.use(express.static(__dirname + '/public/stylesheets/'));
 app.use(methodOverride('_method'));
@@ -86,6 +86,11 @@ app.get("/home", function(req, res) {
 res.render("index",{currentUser: currentUser});
 });
 //app.use(userRoute);
+
+app.all("/admin", function(req, res, next) {
+  next(); // if the middleware allowed us to get here,
+          // just move on to the next route handler
+});
 
 
 app.use(registerRoute);
