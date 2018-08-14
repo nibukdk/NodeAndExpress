@@ -1,26 +1,53 @@
 <%include ./partials/header.ejs %>
-<!-- Form for registration route -->
-<div class="col-lg-9 col-sm-6 bodyPart">
-      <h1 class="text-dark">Admin Page</h1>
-      <p>Welcome Admin </p>
-    <ul>
-      <% result.forEach((result)=>{ %>
+  <!-- Form for registration route -->
+  <div class="col-lg-9 col-sm-6  mx-auto">
+    <h1 class="text-dark">Admin Page</h1>
+    <p>Welcome Admin </p>
+    <div class="table-responsive">
+      <table class="table">
+        <caption>List of users</caption>
+        <thead  class="thead-dark">
 
-        <li>
-          <div class="card border-success bg-dark text-white">
-                <h5 class="card-title text-center"><%= result.name %> </h5>
-                  <span>Last Logged In: <%= result.last_login_date.toLocaleTimeString().substring(0,8) %>, <%= result.last_login_date.toLocaleDateString("en-GB",{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %> </span>
-                  <div class="card-footer bg-transparent">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Users</th>
+            <th scope="col">Last logged In</th>
+            <th scope="col">Admin Rights</th>
+            <th scope="col"> Link</th>
+          </tr>
+        </thead>
+        <tbody>
+          <%  let counter = 1; %>
+            <% result.forEach((userInfo)=>{ %>
 
-                    <a href="/admin/<%= result._id %>/details" class="card-link">Detail</a>
+              <tr>
+                <th scope="row">
+                  <%= counter++ %>
+                </th>
+                <td>
+                  <%=userInfo.username %>
+                </td>
+                <td>
+                  <%= userInfo.last_login_date.toLocaleTimeString().substring(0,8) %>,
+                    <%= userInfo.last_login_date.toLocaleDateString("en-GB",{ weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }) %>
+                </td>
+                <td>
+                  <% if(userInfo.isAdmin){ %>
+                    True
+                    <%  }else{ %>
+                      False
+                      <%  }%>
 
-                  </div>
-          </div>
+                </td>
+                <td>
+                  <span>  <a href="/admin/<%= userInfo._id %>/details" role="button">Check Detail</a></span>
+                </td>
 
-        </li>
-
-  <%  }) %>
-    </ul>
-</div>
+              </tr>
+              <%  }) %>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
   <%include ./partials/footer.ejs %>

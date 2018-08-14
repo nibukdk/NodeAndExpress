@@ -2,8 +2,9 @@
   <!-- Form for registration route -->
   <div class="container">
     <div class="row">
-      <div class="col-lg-9 ">
-        <h1 class="">Register Page</h1>
+      <div class="col-lg-9 col-sm-9 mx-auto ">
+        <br/>
+        <h1 class="text-info">Register New User</h1>
         <form action="/register" method="POST" class="row justify-content-center bg-dark text-white">
           <div class="col-lg-9">
             <div class="form-group">
@@ -17,6 +18,18 @@
               <label for="email">Email address</label>
               <input type="email" class="form-control" id="email" aria-describedby="email" placeholder="Enter email" name="email" required>
               <small id="email" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <div class="form-group">
+              <label for="username">User Name</label>
+              <input class="form-control" type="text" id="username" name="username">
+            </div>
+          </div>
+          <div class="col-lg-9">
+            <div class="form-group">
+              <label for="password">Password</label>
+              <input class="form-control" type="password" id="password" name="password">
             </div>
           </div>
           <div class="col-lg-9">
@@ -37,23 +50,13 @@
               <input class="form-control" id="age" type="number" name="age" min="18" max="65">
             </div>
           </div>
-          <div class="col-lg-9">
-            <div class="form-group">
-              <label for="username">User Name</label>
-              <input class="form-control" type="text" id="username" name="username">
-            </div>
-          </div>
-          <div class="col-lg-9">
-            <div class="form-group">
-              <label for="password">Password</label>
-              <input class="form-control" type="password" id="password" name="password">
-            </div>
-          </div>
+
           <div class="col-lg-9">
             <div class="form-group">
               <label for="registrationCode">Registration Code</label>
               <input class="form-control" id="registrationCode" type="text" name="registrationCode">
-              <small id="registrationCode" class="form-text text-muted">Its optional and leave empty for customers</small>
+              <small id="registrationCode" class="form-text text-muted">Its optional and leave empty for customers.
+              Provide 123456 for registering as admin</small>
             </div>
           </div>
           <div class="col-lg-9">

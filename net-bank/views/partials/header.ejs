@@ -6,7 +6,7 @@
   <meta charset="utf-8">
 
   <title>Net-Bank</title>
-  <link rel="stylesheet" href="app.css">
+  <link rel="stylesheet" href="app.css" type="text/css">
   <link rel="stylesheet" href="/css/bootstrap.min.css">
   <script src="/js/jquery.min.js"></script>
   <script src="/js/bootstrap.min.js"></script>
@@ -20,70 +20,68 @@
   <div class="container-fluid">
     <div class="row">
       <div class="col-lg-12">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand" href="/">
-
-  <% if(currentUser){ %>
-    <% if(currentUser.isAdmin){ %>
-      Welcome Admin
-  <%  }else{ %>
-    Welcome <%= currentUser.username %>
-  <%  } %>
-
-  <% } %>
-  <% if(!currentUser) { %>
-    Net-Bank
-  <% } %>
-  </a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navCol" aria-controls="navCol" aria-expanded="false" aria-label="Toggle navigation">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+          <a class="navbar-brand" href="/">XXX Bank    </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navCol" aria-controls="navCol" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
 
-  <div class="collapse navbar-collapse" id="navCol">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
-      </li>
-        <!-- For cecking if only account holder can login -->
-      <% if( !currentUser){ %>
-        <li class="nav-item">
-          <a class="nav-link" href="/login">Login</a>
-        </li>
+          <div class="collapse navbar-collapse" id="navCol">
+            <ul class="navbar-nav mr-auto">
+
+              <% if(currentUser){ %>
+                <li class="nav-item active">
+                  <% if(currentUser.isAdmin){ %>
+                    <a class="nav-link" href="/admin"> Admin Profile</a>
+
+                    <%  }else{ %>
+                      <a class="nav-link" href="/client"><%= currentUser.username %> Profile</a>
+                      <%  } %>
+                </li>
+                <% } %>
+
+                  <!-- For cecking if only account holder can login -->
+                  <% if( !currentUser){ %>
+                    <li class="nav-item">
+                      <a class="nav-link" href="/login">Login</a>
+                    </li>
 
 
-    <%  }else{ %>
-    <%  if(currentUser.isAdmin===true){ %>
-        <li class="nav-item">
-          <a class="nav-link" href="/logout">Logout</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/register">Register</a>
-        </li>
-    <%  }  else{ %>
-        <li class="nav-item">
-          <a class="nav-link" href="/logout">Logout</a>
-        </li>
-    <%  } %>
+                    <%  }else{ %>
+                      <%  if(currentUser.isAdmin===true){ %>
+                        <li class="nav-item">
+                          <a class="nav-link" href="/logout">Logout</a>
+                        </li>
+                        <li class="nav-item">
+                          <a class="nav-link" href="/register">Register</a>
+                        </li>
+                        <%  }  else{ %>
+                          <li class="nav-item">
+                            <a class="nav-link" href="/logout">Logout</a>
+                          </li>
+                          <%  } %>
 
 
-    <%  } %>
+                            <%  } %>
 
-    </ul>
-    <!--
+            </ul>
+            <!--
     <form class="form-inline my-2 my-lg-0">
       <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
     </form>
   -->
-  </div>
-</nav>
-</div>
+          </div>
+        </nav>
+      </div>
 
-<div class="container">
-  <% if( error  && error.length >0){ %>
-    <div class="alert alert-danger" role="alert">
-      <%= error %>
+      <div class="container">
+        <% if( error  && error.length >0){ %>
+          <div class="alert alert-danger" role="alert">
+            <%= error %>
+          </div>
+          <% }%>
+
+      </div>
     </div>
-  <% }%>
-
-</div>
+  </div>
