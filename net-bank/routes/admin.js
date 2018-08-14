@@ -4,26 +4,32 @@ let express = require('express'),
   passport = require('passport'),
   LocalStrategy = require("passport-local"),
   flash = require('connect-flash');
-  User = require("../models/user.js");
+User = require("../models/user.js");
 
 
 
-  router.use(flash());
+router.use(flash());
 
 //Get current user
+
+router.use(function(req, res, next) {
+  res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
+  res.header('Expires', '-1');
+  res.header('Pragma', 'no-cache');
+  next()
+});
 router.use(function(req, res, next) {
   res.locals.user = req.user;
-  res.locals.message=req.flash("error");
+  res.locals.message = req.flash("error");
   next();
 });
-
-router.get("/admin", isLoggedIn,function(req, res) {
+router.get("/admin", isLoggedIn, function(req, res) {
   let currentUser = req.user;
-  let userList={};
+  let userList = {};
 
-  User.find({},function(err,result){
-    result.forEach(result =>{
-      userList[result._id]=result;
+  User.find({}, function(err, result) {
+    result.forEach(result => {
+      userList[result._id] = result;
 
     });
 
@@ -39,35 +45,85 @@ router.get("/admin", isLoggedIn,function(req, res) {
 
 //Get Details of register clients
 
-router.get("/admin/:id/details", function(req, res){
-  let userId = req.params.id, currentUser= req.user;
-  User.findById(req.params.id, function(err, result){
-    if(err){
+router.get("/admin/:id/details", function(req, res) {
+  let userId = req.params.id,
+    currentUser = req.user;
+  User.findById(req.params.id, function(err, result) {
+    if (err) {
       console.log(err);
+      res.redirect("back")
     }
-    console.log(userId);
 
-      res.render('user-detail',{user: result, currentUser: currentUser})
+    res.render('user-detail', {
+      userInfo: result,
+      currentUser: currentUser
+    });
+
   })
 
 });
 
+//Update user userInfo
+router.get("/admin/:id/details/update", function(req, res) {
+  let userId = req.params.id,
+    currentUser = req.user;
+  User.findById(req.params.id, function(err, result) {
+    if (err) {
+      console.log(err);
+    }
+    console.log(userId);
+
+    res.render('user-detail-update', {
+      userInfo: result,
+      currentUser: currentUser
+    });
+    console.log(result)
+  });
+});
+
+//Update user details post
+router.put("/admin/:id/details/", function(req, res) {
+  let data = {
+    name: req.body.name,
+    username: req.body.username,
+    age: req.body.age,
+    email: req.body.email
+  };
+  User.findByIdAndUpdate(req.params.id, data, function(err, updatedData) {
+    if (err) {
+      console.log(err);
+      res.redirect("back");
+    } else {
+      res.redirect("/admin/"+req.params.id+"/details/");
+      console.log(updatedData);
+    }
+
+  });
+});
 
 
+//delete user
+router.delete("/admin/:id/details", function(req,res){
+  User.findByIdAndRemove(req.params.id, function(err){
+    if(err){
+      console.log("Unable to delete", err);
+    }
+    res.redirect("/admin");
+  });
+});
 
-
-
-function isLoggedIn(req, res, next) {
-  if(req.isAuthenticated() && req.user.isAdmin=== true){
+function isLoggedIn(req, res, next) { //Login checking loginMiddleware
+  if (req.isAuthenticated() && req.user.isAdmin === true) {
     return next();
   }
-  req.flash("error","Please Login First");
+  req.flash("error", "Please Login First");
   res.redirect("/");
 
 }
+
 let loginMiddleware = passport.authenticate('local', {
   failureRedirect: "/login"
 });
 
 
-module.exports= router;
+module.exports = router;

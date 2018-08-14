@@ -1,7 +1,111 @@
 <%include ./partials/header.ejs %>
+  <div class="col-lg-9 col-sm-9">
 
-<h1 class="">This is userdetil page</h1>
+    <br>
+    <%  let counter=1; %>
+      <table class="table">
+
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Content</th>
+            <th scope="col">Details</th>
+
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">
+              <%= counter++ %>
+            </th>
+            <td>
+              Name
+            </td>
+            <td>
+              <%= userInfo.name %>
+            </td>
+          </tr>
+
+          <tr>
+            <th scope="row">
+              <%= counter++ %>
+            </th>
+            <td>
+              Username
+            </td>
+            <td>
+              <%= userInfo.username %>
+            </td>
+          </tr>
+
+          <tr>
+            <th scope="row">
+              <%= counter++ %>
+            </th>
+            <td>
+              Email
+            </td>
+            <td>
+              <%= userInfo.email %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <%= counter++ %>
+            </th>
+            <td>
+              Age
+            </td>
+            <td>
+              <%= userInfo.age %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <%= counter++ %>
+            </th>
+            <td>
+              Social Security ID
+            </td>
+            <td>
+              <%= userInfo.securityId %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <%= counter++ %>
+            </th>
+            <td>
+              Sex
+            </td>
+            <td>
+              <%= userInfo.sex %>
+            </td>
+          </tr>
+          <tr>
+            <th scope="row">
+              <%= counter++ %>
+            </th>
+            <td>
+              Is Admin
+            </td>
+            <td>
+              <%= userInfo.isAdmin %>
+            </td>
+          </tr>
 
 
 
-<%include ./partials/footer.ejs %>
+
+        </tbody>
+      </table>
+
+      <a href="/admin/<%= userInfo._id %>/details/update" type="button" class="btn btn-info btn-lg btn-block">Update</a>
+      <br>
+      <form  action="/admin/<%= userInfo._id%>/details?_method=DELETE" method="POST">
+
+          <button class="btn btn-danger btn-lg btn-block">Delete</button>
+
+      </form>
+  </div>
+  <%include ./partials/footer.ejs %>

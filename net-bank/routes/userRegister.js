@@ -56,7 +56,8 @@ let express = require('express'),
         registrationCode: registrationCode,
         isAdmin: isAdmin,
         securityId: securityId,
-        sex: sex
+        sex: sex,
+        email: email
       }), password, function(err, result) {
         if (err) {
           console.log(err);
