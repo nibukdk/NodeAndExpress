@@ -6,7 +6,8 @@ let express = require('express'),
   flash = require('connect-flash');
 User = require("../models/user.js");
 
-let adminRoute = require("./admin.js");
+let adminRoute = require("./admin.js"),
+    clientRoute = require("./client.js");;
 
 
 
@@ -17,20 +18,25 @@ router.use(flash());
 router.use(function(req, res, next) {
   res.locals.user = req.user;
   res.locals.message = req.flash("error");
+  res.locals.messge = req.flash("success");
   next();
 });
+
 router.use(function(req, res, next) { //Prevent Browser Cache after logout
   res.header('Cache-Control', 'private, no-cache, no-store, must-revalidate');
   res.header('Expires', '-1');
   res.header('Pragma', 'no-cache');
   next()
 });
+
+
 router.get("/", function(req, res) {
   let currentuser = user;
   res.render("index", {
     currentuser: currentuser
   });
 });
+
 router.get("/home", function(req, res) {
 
   res.render("index");
@@ -39,17 +45,13 @@ router.get("/home", function(req, res) {
 //Providing Admin Route
 router.use(adminRoute);
 //Providing client Route
-router.get("/client", isLoggedIn, function(req, res) {
-  let currentUser = req.user;
+router.use(clientRoute);
 
-  res.render("client", {
-    currentUser: currentUser
-  });
-});
 //User Login Route
 
 let loginMiddleware = passport.authenticate('local', {
-  failureRedirect: "/login"
+  failureRedirect: "/login",
+   failureFlash : true
 });
 
 router.get("/login", alreadyLoggedIn, function(req, res) {
@@ -59,9 +61,9 @@ router.get("/login", alreadyLoggedIn, function(req, res) {
   });
 });
 
-router.post("/login",loginMiddleware, function(req, res) {
+router.post("/login", loginMiddleware, function(req, res) {
   let currentUser = req.user;
-  User.findOneAndUpdate({
+  User.findOneAndUpdate({ //To update last logged in data
     username: currentUser.username
   }, {
     last_login_date: Date.now()
@@ -70,6 +72,7 @@ router.post("/login",loginMiddleware, function(req, res) {
       console.log(err);
     }
   });
+
   if (req.user.isAdmin === false) {
     res.redirect("/client");
   } else if (req.user.isAdmin === true) {
@@ -85,8 +88,8 @@ router.get("/logout", isLoggedIn, function(req, res, next) {
     if (err) {
       return next(err);
     }
-    //  req.flash("logout", "Logged you out");
-    res.redirect('/')
+     //req.flash("success", "Logged you out");
+     res.redirect('/')
   });
 });
 
@@ -101,7 +104,7 @@ function alreadyLoggedIn(req, res, next) {
 }
 
 
-function isLoggedIn(req, res, next) {//To check for logout especially.
+function isLoggedIn(req, res, next) { //To check for logout especially.
   if (req.isAuthenticated()) {
 
     return next();
@@ -110,10 +113,6 @@ function isLoggedIn(req, res, next) {//To check for logout especially.
   res.redirect("/");
   console.log("User is not logged in ");
 }
-
-
-
-
 
 
 module.exports = router;

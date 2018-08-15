@@ -1,12 +1,119 @@
 <%include ./partials/header.ejs %>
-<!-- Form for registration route -->
+  <!-- Form for registration route -->
   <div class="container">
     <div class="row">
-      <h1>Client page</h1>
-    </div>
-  </div>
+      <div class="col-lg-2 col-md-2 col-sm-2 mx-auto ">
+        <div class="sidebar-nav">
+          <ul class="nav flex-column ">
+            <li class="nav-item">
+              <a class="nav-link active" href="#account">Account Info</a>
+              <hr />
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#pay">Pay</a>
+              <hr />
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#Loans-Savings">Loans-Savings</a>
+              <hr />
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-lg-10 col-md-10 col-sm-10 mx-auto">
+        <h1>Client page</h1>
+        <div id="account">
+          <% let counter=1; %>
+            <div class="table-responsive">
+              <table class="table">
+
+                <thead class="thead-dark">
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Account Info</th>
+                    <th scope="col">Details</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">
+                      <%= counter++ %>
+                    </th>
+                    <td>
+                      Name
+                    </td>
+                    <td>
+                      <%= currentUser.name %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <%= counter++ %>
+                    </th>
+                    <td>
+                      Acocunt Number
+                    </td>
+                    <td>
+                      FI2536212626267
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <%= counter++ %>
+                    </th>
+                    <td>
+                      Age
+                    </td>
+                    <td>
+                      <%= currentUser.age %>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <%= counter++ %>
+                    </th>
+                    <td>
+                      Social Security ID
+                    </td>
+                    <td>
+                      <%= currentUser.securityId %>
+                    </td>
+                  </tr>
+
+                </tbody>
+              </table>
+            </div>
+        </div>
+        <div id="pay">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget massa quis quam congue hendrerit. Suspendisse quam lacus, mollis vestibulum lacus a, maximus ultricies ipsum. Nullam tincidunt turpis ac urna auctor tincidunt quis non ante.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id convallis velit. Maecenas a magna a turpis placerat elementum sed vel leo. Curabitur fringilla lectus felis, ut venenatis leo posuere id. Maecenas sed luctus justo, posuere
+            bibendum augue. Pellentesque malesuada ornare lectus, laoreet mattis purus euismod et. Integer eu semper nisi, at rhoncus risus. In luctus eu lorem in varius. Proin malesuada porta imperdiet. Vestibulum vitae elit sed nisl dapibus dapibus.
+            Sed sem tellus, sagittis vitae ligula eget, fringilla maximus ligula. Nam eu lectus nibh. Morbi efficitur mauris quis finibus pretium. Nullam aliquet pharetra tempus. In ut congue mi. Suspendisse sed risus vulputate, ultrices nisl tristique,
+            condimentum dui. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse potenti. Nulla nec nunc ut eros scelerisque sollicitudin. Aliquam erat volutpat. Nulla facilisi. Donec sit amet purus at ante
+            aliquet tempor sed at ante. Mauris congue quis felis ac volutpat. Maecenas ante nulla, commodo vel urna a, porta commodo arcu. Fusce cursus, risus sed tempus rutrum, augue ligula viverra sem, sed sodales magna quam ut massa. Vivamus eget sapien
+            finibus, mattis massa ac, vestibulum ex. Ut ut ante ullamcorper ipsum accumsan tincidunt in sed risus. Proin nec dapibus quam, in auctor risus. Phasellus pulvinar aliquet purus at semper. Nam ut pellentesque orci. In sit amet metus mauris.
+            Donec vel faucibus ante. Quisque rhoncus, arcu sed facilisis tempor, orci dui tempor neque, non lacinia nibh nibh et quam. Quisque ultricies ultricies justo, et blandit nulla interdum at. Duis laoreet, leo a finibus posuere, urna massa elementum
+            felis, sit amet fringilla quam dui id ante. Nunc a eros non tellus elementum malesuada. Integer consectetur risus a est sagittis interdum. Vivamus ut lorem mollis, mollis neque in, rutrum lectus. Mauris eget augue vitae lacus condimentum bibendum.</p>
+
+        </div>
+        <div id="Loans-Savings">
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent eget massa quis quam congue hendrerit. Suspendisse quam lacus, mollis vestibulum lacus a, maximus ultricies ipsum. Nullam tincidunt turpis ac urna auctor tincidunt quis non ante.
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce id convallis velit. Maecenas a magna a turpis placerat elementum sed vel leo. Curabitur fringilla lectus felis, ut venenatis leo posuere id. Maecenas sed luctus justo, posuere
+            bibendum augue. Pellentesque malesuada ornare lectus, laoreet mattis purus euismod et. Integer eu semper nisi, at rhoncus risus. In luctus eu lorem in varius. Proin malesuada porta imperdiet. Vestibulum vitae elit sed nisl dapibus dapibus.
+            Sed sem tellus, sagittis vitae ligula eget, fringilla maximus ligula. Nam eu lectus nibh. Morbi efficitur mauris quis finibus pretium. Nullam aliquet pharetra tempus. In ut congue mi. Suspendisse sed risus vulputate, ultrices nisl tristique,
+            condimentum dui. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Suspendisse potenti. Nulla nec nunc ut eros scelerisque sollicitudin. Aliquam erat volutpat. Nulla facilisi. Donec sit amet purus at ante
+            aliquet tempor sed at ante. Mauris congue quis felis ac volutpat. Maecenas ante nulla, commodo vel urna a, porta commodo arcu. Fusce cursus, risus sed tempus rutrum, augue ligula viverra sem, sed sodales magna quam ut massa. Vivamus eget sapien
+            finibus, mattis massa ac, vestibulum ex. Ut ut ante ullamcorper ipsum accumsan tincidunt in sed risus. Proin nec dapibus quam, in auctor risus. Phasellus pulvinar aliquet purus at semper. Nam ut pellentesque orci. In sit amet metus mauris.
+            Donec vel faucibus ante. Quisque rhoncus, arcu sed facilisis tempor, orci dui tempor neque, non lacinia nibh nibh et quam. Quisque ultricies ultricies justo, et blandit nulla interdum at. Duis laoreet, leo a finibus posuere, urna massa elementum
+            felis, sit amet fringilla quam dui id ante. Nunc a eros non tellus elementum malesuada. Integer consectetur risus a est sagittis interdum. Vivamus ut lorem mollis, mollis neque in, rutrum lectus. Mauris eget augue vitae lacus condimentum bibendum.</p>
+
+        </div>
+
+      </div>
 
 
 
 
-  <%include ./partials/footer.ejs %>
+
+      <%include ./partials/footer.ejs %>

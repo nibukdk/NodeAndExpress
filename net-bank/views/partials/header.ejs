@@ -19,8 +19,8 @@
 
   <div class="container-fluid">
     <div class="row">
-      <div class="col-lg-12">
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="col-lg-12 navDiv">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark  fixed-top">
           <a class="navbar-brand" href="/">XXX Bank    </a>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navCol" aria-controls="navCol" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
@@ -30,12 +30,13 @@
             <ul class="navbar-nav mr-auto">
 
               <% if(currentUser){ %>
-                <li class="nav-item active">
+                <li class="nav-item ">
                   <% if(currentUser.isAdmin){ %>
                     <a class="nav-link" href="/admin"> Admin Profile</a>
 
                     <%  }else{ %>
-                      <a class="nav-link" href="/client"><%= currentUser.username %> Profile</a>
+                      <a class="nav-link" href="/client">
+                        <%= currentUser.username %> Profile</a>
                       <%  } %>
                 </li>
                 <% } %>
@@ -73,15 +74,30 @@
   -->
           </div>
         </nav>
+        <br/>
       </div>
 
       <div class="container">
+
         <% if( error  && error.length >0){ %>
-          <div class="alert alert-danger" role="alert">
+          <div class="alert alert-danger alert-dismissible fade show" role="alert">
+
             <%= error %>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
           </div>
+          <% }%>
+          <% if( success  && success.length >0){ %>
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+
+              <%= success %>
+              <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </div>
           <% }%>
 
       </div>
     </div>
   </div>
+    <br/>
+      <br/>

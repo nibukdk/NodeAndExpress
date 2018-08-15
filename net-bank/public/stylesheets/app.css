@@ -29,6 +29,20 @@ ul {
   margin: 2rem;
 }
 
-.jumbotron{
+.jumbotron {
   margin: 4rem auto;
+}
+.sidebar-nav {
+  z-index: 1;
+  position: fixed;
+  max-height: 100%;
+  padding: 2rem;
+}
+
+}
+
+
+#account,#pay,#Loan-Savings{
+  margin-top:2rem;
+
 }
