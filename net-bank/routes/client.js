@@ -7,8 +7,7 @@ let express = require('express'),
   User = require("../models/user.js");
     //middlewares = ("../middleware");
 
-let adminRoute = require("./admin.js"),
-  clientRoute = require("./client.js");;
+
 
 
 
@@ -30,7 +29,10 @@ router.use(function(req, res, next) { //Prevent Browser Cache after logout
   next()
 });
 
-
+let passportAuthenticate = passport.authenticate('local', {
+  failureRedirect: "/login",
+  failureFlash: true
+});
 router.get("/", function(req, res) {
   let currentuser = user;
   res.render("index", {
@@ -42,13 +44,19 @@ router.get("/home", function(req, res) {
 
   res.render("index");
 });
-let passportAuthenticate = passport.authenticate('local', {
-  failureRedirect: "/login",
-  failureFlash: true
+
+//Providing Admin Route
+//Providing client Route
+router.get("/client", clientLoggedIn, function(req, res) {
+  let currentUser = req.user;
+
+  res.render("client", {
+    currentUser: currentUser
+  });
 });
 
-
-router.get("/login", alreadyLoggedIn, function(req, res) {
+//User Login Route
+router.get("/login", hasLoggedUser, function(req, res) {
   let currentUser = req.user;
   res.render("login", {
     currentUser: currentUser
@@ -76,7 +84,7 @@ router.post("/login", passportAuthenticate, function(req, res) {
 
 //Log out
 
-router.get("/logout", isLoggedIn, function(req, res, next) {
+router.get("/logout", clientLoggedIn, function(req, res, next) {
   req.logout();
   req.session.destroy(function(err) {
     if (err) {
@@ -87,16 +95,18 @@ router.get("/logout", isLoggedIn, function(req, res, next) {
   });
 });
 
-//Providing Admin Route
-router.use(adminRoute);
-//Providing client Route
-router.use(clientRoute);
+function clientLoggedIn(req, res, next) {
+  if (req.isAuthenticated() && !req.user.isAdmin) {
 
-//User Login Route
+    return next();
+  }
+  req.flash("error", "Please Login First");
+  res.redirect("/");
+  console.log("User is not logged in ");
 
+}
 
-
-function alreadyLoggedIn(req, res, next) {
+function hasLoggedUser(req, res, next) {
   if (req.isAuthenticated()) {
     req.flash("error", "Already logged in. Please logout first");
     console.log("User is already logged in ");
@@ -105,13 +115,6 @@ function alreadyLoggedIn(req, res, next) {
   return next();
 }
 
-function isLoggedIn(req, res, next) { //To check for logout especially.
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  req.flash("error", "Please Login First");
-  res.redirect("/");
-  console.log("User is not logged in ");
-}
+
 
 module.exports = router;

@@ -3,8 +3,9 @@ let express = require('express'),
   methodOverride = require("method-override"),
   passport = require('passport'),
   LocalStrategy = require("passport-local"),
-  flash = require('connect-flash');
-User = require("../models/user.js");
+  flash = require('connect-flash'),
+  User = require("../models/user.js");
+//let middleware = ("../middleware");
 
 
 
@@ -23,7 +24,26 @@ router.use(function(req, res, next) {
   res.locals.message = req.flash("error");
   next();
 });
-router.get("/admin", isLoggedIn, function(req, res) {
+
+//Main route for home page
+
+router.get("/", function(req, res) {
+  let currentUser = req.user;
+  res.render("index", {
+    currentUser: currentUser
+  });
+});
+router.get("/home", function(req, res) {
+  let currentUser = req.user;
+
+  res.render("index", {
+    currentUser: currentUser
+  });
+});
+
+
+//Admin Routes
+router.get("/admin", adminLoggedIn, function(req, res) {
   let currentUser = req.user;
   let userList = {};
 
@@ -94,7 +114,7 @@ router.put("/admin/:id/details/", function(req, res) {
       console.log(err);
       res.redirect("back");
     } else {
-      res.redirect("/admin/"+req.params.id+"/details/");
+      res.redirect("/admin/" + req.params.id + "/details/");
       console.log(updatedData);
     }
 
@@ -103,16 +123,16 @@ router.put("/admin/:id/details/", function(req, res) {
 
 
 //delete user
-router.delete("/admin/:id/details", function(req,res){
-  User.findByIdAndRemove(req.params.id, function(err){
-    if(err){
+router.delete("/admin/:id/details", function(req, res) {
+  User.findByIdAndRemove(req.params.id, function(err) {
+    if (err) {
       console.log("Unable to delete", err);
     }
     res.redirect("/admin");
   });
 });
 
-function isLoggedIn(req, res, next) { //Login checking loginMiddleware
+function adminLoggedIn(req, res, next) {
   if (req.isAuthenticated() && req.user.isAdmin === true) {
     return next();
   }
@@ -120,10 +140,5 @@ function isLoggedIn(req, res, next) { //Login checking loginMiddleware
   res.redirect("/");
 
 }
-
-let loginMiddleware = passport.authenticate('local', {
-  failureRedirect: "/login"
-});
-
 
 module.exports = router;
